@@ -8,6 +8,8 @@ RUN useradd --comment "Dropbox Docker Account" --create-home --user-group --shel
 
 # Volume baby.
 VOLUME /home/dropbox
+ENV DROPBOX_UID=1000
+ENV DROPBOX_GID=1000
 
 # Create dependencies
 RUN  apt-get update \

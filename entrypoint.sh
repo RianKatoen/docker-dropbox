@@ -1,6 +1,6 @@
 #!/bin/bash
-chown -R dropbox:dropbox /home/dropbox
-chmod -R 755 /home/dropbox
+usermod -u ${DROPBOX_GID} dropbox
+groupmod -g ${DROPBOX_UID} dropbox
 
 gosu dropbox /entrypoint-dropbox.sh & export DROPBOX_PID="$!"
 trap "/bin/kill -SIGQUIT ${DROPBOX_PID}" INT
@@ -14,4 +14,3 @@ while kill -0 ${DROPBOX_PID} 2> /dev/null; do
   /usr/bin/find /tmp/ -maxdepth 1 -type d -mtime +1 ! -path /tmp/ -exec rm -rf {} \;
   /bin/sleep 60
 done
-
